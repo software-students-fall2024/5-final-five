@@ -1,10 +1,12 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resume Generator</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dongle&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+        
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
@@ -13,7 +15,9 @@
             color: #fff;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             min-height: 100vh;
         }
 
@@ -42,6 +46,7 @@
         h2 {
             font-size: 1.5rem;
             margin-top: 2rem;
+            text-align: center;
         }
 
         h3 {
@@ -71,7 +76,7 @@
             border-color: #6a11cb;
         }
 
-        form button {
+        button {
             padding: 0.8rem 1.5rem;
             font-size: 1rem;
             background: #6a11cb;
@@ -87,8 +92,13 @@
             background: #2575fc;
         }
 
-        #addEducation, #addExperience, #addProject {
-            margin-bottom: 1rem;
+        .hidden {
+            display: none;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
         }
 
         #pdfViewer {
@@ -115,6 +125,28 @@
             margin-top: 1rem;
         }
 
+        .container {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            width: 90vw;
+        }
+
+        .form-container, .viewer-container {
+            flex: 1;
+            max-width: 48%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #pdfViewer .placeholder {
+            display: block;
+            font-size: 1.2rem;
+            color: #333;
+            margin-top: 2rem;
+            font-style: italic;
+        }
+
         @media (max-width: 768px) {
             form, #pdfViewer {
                 padding: 1rem;
@@ -132,239 +164,304 @@
     </style>
 </head>
 <body>
+    <div style="position:fixed; top:0; left:1rem">
+        <div style="font-family: Dongle; font-size: 3rem; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5)"><b>resume.ly</b></div>
+    </div>
+    <div class="position:fixed; left:0">
+        <button id="goToDashboard" class="btn btn-primary"><div>
+            <b>Return</b>
+        </button>
+    </div>
+    <div class="container">
+        <div class="form-container">
+            <form id="resumeForm" method="POST" action="/generate_resume">
+                <!-- Step 1: Personal Information -->
+                <div class="form-step" id="step-1">
+                    <h1>Your Information</h1>
+                    <h2>Personal Information</h2>
+                    <label for="name">Full Name:</label>
+                    <input type="text" id="name" name="name">
+            
+                    <label for="phone">Phone Number:</label>
+                    <input type="text" id="phone" name="phone">
+            
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email">
+            
+                    <label for="linkedin">LinkedIn User:</label>
+                    <input type="text" id="linkedin" name="linkedin">
+            
+                    <label for="github">GitHub User:</label>
+                    <input type="text" id="github" name="github">
+                </div>
 
-    <h1>Resume Information Form</h1>
-    
-    <form id="resumeForm" method="POST" action="/generate_resume">
-        <!-- personal -->
-        <h2>Personal Information</h2>
-        <label for="name">Full Name:</label>
-        <input type="text" id="name" name="name"><br>
+                <!-- Step 2: Education -->
+                <div class="form-step hidden" id="step-2">
+                    <h2>Education</h2>
+                    <div id="educationFields">
+                        <h3>Education 1</h3>
+                        <label for="institution1">Institution:</label>
+                        <input type="text" id="institution1" name="institution1" required><br>
 
-        <label for="phone">Phone Number:</label>
-        <input type="text" id="phone" name="phone"><br>
+                        <label for="degree1">Degree:</label>
+                        <input type="text" id="degree1" name="degree1"><br>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email"><br>
+                        <label for="location1">Location:</label>
+                        <input type="text" id="location1" name="location1"><br>
 
-        <label for="linkedin">LinkedIn User:</label>
-        <input type="text" id="linkedin" name="linkedin"><br>
+                        <label for="date1">Graduation:</label>
+                        <input type="text" id="date1" name="date1"><br><br>
+                    </div>
+                    <button type="button" id="addEducation">Add Another Education</button><br><br>
+                </div>
 
-        <label for="github">GitHub User:</label>
-        <input type="text" id="github" name="github"><br><br>
+                <!-- Step 3: Experience -->
+                <div class="form-step hidden" id="step-3">
+                    <h2>Experience</h2>
+                    <div id="experienceFields">
+                        <h3>Experience 1</h3>
+                        <label for="company1">Company Name:</label>
+                        <input type="text" id="company1" name="company1"><br>
 
-        <!-- education -->
-        <h2>Education</h2>
-        <div id="educationFields">
-            <h3>Education 1</h3>
-            <label for="institution1">Institution:</label>
-            <input type="text" id="institution1" name="institution1"><br>
+                        <label for="role1">Role:</label>
+                        <input type="text" id="role1" name="role1"><br>
 
-            <label for="degree1">Degree:</label>
-            <input type="text" id="degree1" name="degree1"><br>
+                        <label for="expLocation1">Location:</label>
+                        <input type="text" id="expLocation1" name="expLocation1"><br>
 
-            <label for="location1">Location:</label>
-            <input type="text" id="location1" name="location1"><br>
+                        <label for="expDate1">Date Range:</label>
+                        <input type="text" id="expDate1" name="expDate1"><br>
 
-            <label for="date1">Graduation:</label>
-            <input type="text" id="date1" name="date1"><br><br>
+                        <label for="responsibilities1">Responsibilities: (colon-separated)</label>
+                        <textarea id="responsibilities1" name="responsibilities1"></textarea><br><br>
+                    </div>
+                    <button type="button" id="addExperience">Add Another Experience</button><br><br>
+                </div>
+
+                <!-- Step 4: Projects -->
+                <div class="form-step hidden" id="step-4">
+                    <h2>Projects</h2>
+                    <div id="projectFields">
+                        <h3>Project 1</h3>
+                        <label for="projectName1">Project Name:</label>
+                        <input type="text" id="projectName1" name="projectName1"><br>
+
+                        <label for="projectTech1">Technologies Used (comma-separated):</label>
+                        <input type="text" id="projectTech1" name="projectTech1"><br>
+
+                        <label for="projectDate1">Date Range:</label>
+                        <input type="text" id="projectDate1" name="projectDate1"><br>
+
+                        <label for="projectDetails1">Details (colon-separated):</label>
+                        <textarea id="projectDetails1" name="projectDetails1"></textarea><br><br>
+                    </div>
+                    <button type="button" id="addProject">Add Another Project</button><br><br>
+                </div>
+
+                <!-- Step 5: Technical Skills -->
+                <div class="form-step hidden" id="step-5">
+                    <h2>Technical Skills</h2>
+                    <label for="languages">Languages (comma-separated):</label>
+                    <input type="text" id="languages" name="languages"><br>
+
+                    <label for="frameworks">Frameworks (comma-separated):</label>
+                    <input type="text" id="frameworks" name="frameworks"><br>
+
+                    <label for="tools">Developer Tools (comma-separated):</label>
+                    <input type="text" id="tools" name="tools"><br>
+
+                    <label for="libraries">Libraries (comma-separated):</label>
+                    <input type="text" id="libraries" name="libraries"><br><br>
+                </div>
+
+                <!-- Navigation buttons -->
+                <div class="navigation-buttons">
+                    <button type="button" id="previousBtn" class="hidden">Previous</button>
+                    <button type="button" id="nextBtn">Next</button>
+                    <button type="submit" class="hidden">Generate Resume</button>
+                </div>
+            </form>
         </div>
-        <button type="button" id="addEducation">Add Another Education</button><br><br>
-
-        <!-- experience -->
-        <h2>Experience</h2>
-        <div id="experienceFields">
-            <h3>Experience 1</h3>
-            <label for="company1">Company Name:</label>
-            <input type="text" id="company1" name="company1"><br>
-
-            <label for="role1">Role:</label>
-            <input type="text" id="role1" name="role1"><br>
-
-            <label for="expLocation1">Location:</label>
-            <input type="text" id="expLocation1" name="expLocation1"><br>
-
-            <label for="expDate1">Date Range:</label>
-            <input type="text" id="expDate1" name="expDate1"><br>
-
-            <label for="responsibilities1">Responsibilities (SPLIT WITH COLON):</label>
-            <textarea id="responsibilities1" name="responsibilities1"></textarea><br><br>
+        <!-- resume viewer! --> 
+        <div class="viewer-container">
+            <div id="pdfViewer">
+                <h1>Your Resume</h1>
+                <div class="placeholder"><img src="{{ url_for('static', filename='pdf.png') }}" width="30vw"/></div>
+                <button id="saveResume" style="display:none;">Save Resume</button>
+                <div id="saveTitleInput" style="display:none;">
+                    <label for="resumeTitle">Enter Resume Title:</label>
+                    <input type="text" id="resumeTitle" placeholder="Enter your resume title"><br><br>
+                    <button id="confirmSaveResume">Save</button>
+                </div>
+                <button id="downloadResume" style="display:none;">Download Resume</button>
+                <iframe id="pdfIframe" width="100%" height="600px" style="display:none;"></iframe><br><br>
+            </div>
         </div>
-        <button type="button" id="addExperience">Add Another Experience</button><br><br>
-
-        <!-- projects -->
-        <h2>Projects</h2>
-        <div id="projectFields">
-            <h3>Project 1</h3>
-            <label for="projectName1">Project Name:</label>
-            <input type="text" id="projectName1" name="projectName1"><br>
-
-            <label for="projectTech1">Technologies Used:</label>
-            <input type="text" id="projectTech1" name="projectTech1"><br>
-
-            <label for="projectDate1">Date Range:</label>
-            <input type="text" id="projectDate1" name="projectDate1"><br>
-
-            <label for="projectDetails1">Details (SPLIT WITH COLON ;):</label>
-            <textarea id="projectDetails1" name="projectDetails1"></textarea><br><br>
-        </div>
-        <button type="button" id="addProject">Add Another Project</button><br><br>
-
-        <!-- tech skills -->
-        <h2>Technical Skills</h2>
-        <label for="languages">Languages (comma-separated):</label>
-        <input type="text" id="languages" name="languages"><br>
-
-        <label for="frameworks">Frameworks (comma-separated):</label>
-        <input type="text" id="frameworks" name="frameworks"><br>
-
-        <label for="tools">Developer Tools (comma-separated):</label>
-        <input type="text" id="tools" name="tools"><br>
-
-        <label for="libraries">Libraries (comma-separated):</label>
-        <input type="text" id="libraries" name="libraries"><br><br>
-
-        <button type="submit">Generate Resume</button>
-    </form>
-
-    <!-- resume viewer! --> 
-    <h2>Your Resume</h2>
-    <div id="pdfViewer" style="display:none;">
-        <iframe id="pdfIframe" width="100%" height="600px"></iframe><br><br>
-        <button id="saveResume" style="display:none;">Save Resume</button>
-        <div id="saveTitleInput" style="display:none;">
-            <label for="resumeTitle">Enter Resume Title:</label>
-            <input type="text" id="resumeTitle" placeholder="Enter your resume title"><br><br>
-            <button id="confirmSaveResume">Save</button>
-        </div>
-        <button id="downloadResume" style="display:none;">Download Resume</button>
     </div>
 
     <script>
+        document.getElementById('goToDashboard').addEventListener('click', function() {
+            window.location.href = '/dashboard';
+        });
+        // step form
+        let currentStep = 1;
+        const steps = document.querySelectorAll('.form-step');
+        const nextBtn = document.getElementById('nextBtn');
+        const prevBtn = document.getElementById('previousBtn');
+        const submitBtn = document.querySelector('form button[type="submit"]');
+        
+        nextBtn.addEventListener('click', function() {
+            if (currentStep < steps.length) {
+                steps[currentStep - 1].classList.add('hidden');
+                currentStep++;
+                steps[currentStep - 1].classList.remove('hidden');
+            }
+            if (currentStep === steps.length) {
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'inline-block';
+            }
+            prevBtn.style.display = currentStep > 1 ? 'inline-block' : 'none';
+        });
+        
+        prevBtn.addEventListener('click', function() {
+            if (currentStep > 1) {
+                steps[currentStep - 1].classList.add('hidden');
+                currentStep--;
+                steps[currentStep - 1].classList.remove('hidden');
+            }
+            nextBtn.style.display = 'inline-block';
+            submitBtn.style.display = 'none';
+            prevBtn.style.display = currentStep > 1 ? 'inline-block' : 'none';
+        });
+
         let educationCount = 1;
-        document.getElementById('addEducation').addEventListener('click', function() {
+        document.getElementById('addEducation')?.addEventListener('click', function() {
             educationCount++;
             let newEducationField = `
                 <h3>Education ${educationCount}</h3>
                 <label for="institution${educationCount}">Institution:</label>
                 <input type="text" id="institution${educationCount}" name="institution${educationCount}"><br>
-
+    
                 <label for="degree${educationCount}">Degree:</label>
                 <input type="text" id="degree${educationCount}" name="degree${educationCount}"><br>
-
+    
                 <label for="location${educationCount}">Location:</label>
                 <input type="text" id="location${educationCount}" name="location${educationCount}"><br>
-
+    
                 <label for="date${educationCount}">Date Range:</label>
                 <input type="text" id="date${educationCount}" name="date${educationCount}"><br><br>
             `;
             document.getElementById('educationFields').insertAdjacentHTML('beforeend', newEducationField);
         });
-
+    
         let experienceCount = 1;
-        document.getElementById('addExperience').addEventListener('click', function() {
+        document.getElementById('addExperience')?.addEventListener('click', function() {
             experienceCount++;
             let newExperienceField = `
                 <h3>Experience ${experienceCount}</h3>
                 <label for="company${experienceCount}">Company Name:</label>
                 <input type="text" id="company${experienceCount}" name="company${experienceCount}"><br>
-
+    
                 <label for="role${experienceCount}">Role:</label>
                 <input type="text" id="role${experienceCount}" name="role${experienceCount}"><br>
-
+    
                 <label for="expLocation${experienceCount}">Location:</label>
                 <input type="text" id="expLocation${experienceCount}" name="expLocation${experienceCount}"><br>
-
+    
                 <label for="expDate${experienceCount}">Date Range:</label>
                 <input type="text" id="expDate${experienceCount}" name="expDate${experienceCount}"><br>
-
+    
                 <label for="responsibilities${experienceCount}">Responsibilities (SPLIT WITH COLON):</label>
                 <textarea id="responsibilities${experienceCount}" name="responsibilities${experienceCount}"></textarea><br><br>
             `;
             document.getElementById('experienceFields').insertAdjacentHTML('beforeend', newExperienceField);
         });
-
+    
         let projectCount = 1;
-        document.getElementById('addProject').addEventListener('click', function() {
+        document.getElementById('addProject')?.addEventListener('click', function() {
             projectCount++;
             let newProjectField = `
                 <h3>Project ${projectCount}</h3>
                 <label for="projectName${projectCount}">Project Name:</label>
                 <input type="text" id="projectName${projectCount}" name="projectName${projectCount}"><br>
-
+    
                 <label for="projectTech${projectCount}">Technologies Used:</label>
                 <input type="text" id="projectTech${projectCount}" name="projectTech${projectCount}"><br>
-
+    
                 <label for="projectDate${projectCount}">Date Range:</label>
                 <input type="text" id="projectDate${projectCount}" name="projectDate${projectCount}"><br>
-
+    
                 <label for="projectDetails${projectCount}">Details:</label>
                 <textarea id="projectDetails${projectCount}" name="projectDetails${projectCount}"></textarea><br><br>
             `;
             document.getElementById('projectFields').insertAdjacentHTML('beforeend', newProjectField);
         });
-
+    
         // resume viewer after generation
         document.getElementById('resumeForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            
-            let formData = new FormData(this);
+        event.preventDefault();
 
-            fetch('/generate_resume', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                const pdfData = data.pdf;
-                const pdfBase64 = `data:application/pdf;base64,${pdfData}`;
+        let formData = new FormData(this);
+
+        fetch('/generate_resume', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            const pdfData = data.pdf;
+            const pdfBase64 = `data:application/pdf;base64,${pdfData}`;
+
+            const pdfViewer = document.getElementById('pdfViewer');
+            const pdfIframe = document.getElementById('pdfIframe');
+            pdfIframe.src = pdfBase64;
+            pdfIframe.style.display = 'block';
+
+            document.querySelector('#pdfViewer .placeholder').style.display = 'none';
+
+            document.getElementById('saveResume').style.display = 'inline';
+            document.getElementById('downloadResume').style.display = 'inline';
+
+            document.getElementById('saveResume').addEventListener('click', function() {
+                document.getElementById('saveResume').style.display = 'none';
+                document.getElementById('saveTitleInput').style.display = 'inline';
+            });
+
+            document.getElementById('confirmSaveResume').addEventListener('click', function() {
+                const resumeName = document.getElementById('resumeTitle').value || 'Untitled Resume';
                 
-                const pdfViewer = document.getElementById('pdfViewer');
-                const pdfIframe = document.getElementById('pdfIframe');
-                pdfIframe.src = pdfBase64;
-                pdfViewer.style.display = 'block';
-                
-                // Show save and download buttons
+                fetch('/save_resume', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: resumeName,
+                        pdf: pdfBase64
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert('Resume saved successfully!');
+                    document.getElementById('saveTitleInput').style.display = 'none';
+                })
+                .catch(error => console.error('Error saving resume:', error));
+
+                document.getElementById('saveTitleInput').style.display = 'none';
                 document.getElementById('saveResume').style.display = 'inline';
-                document.getElementById('downloadResume').style.display = 'inline';
+            });
 
-                // Show input for title when saving
-                document.getElementById('saveResume').addEventListener('click', function() {
-                    document.getElementById('saveTitleInput').style.display = 'inline';
-                });
+            document.getElementById('downloadResume').addEventListener('click', function() {
+                const link = document.createElement('a');
+                link.href = pdfBase64;
+                link.download = 'resume.pdf';
+                link.click();
+            });
+        })
+        .catch(error => console.error('Error generating resume:', error));
+    });
 
-                // Save button functionality with title input
-                document.getElementById('confirmSaveResume').addEventListener('click', function() {
-                    const resumeName = document.getElementById('resumeTitle').value || 'Untitled Resume';
-                    fetch('/save_resume', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            name: resumeName,
-                            pdf: pdfData
-                        })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        alert('Resume saved successfully!');
-                        document.getElementById('saveTitleInput').style.display = 'none'; // Hide title input
-                    })
-                    .catch(error => console.error('Error saving resume:', error));
-                });
-
-                // Download button functionality
-                document.getElementById('downloadResume').addEventListener('click', function() {
-                    const link = document.createElement('a');
-                    link.href = pdfBase64;
-                    link.download = `${document.getElementById('name').value || 'resume'}.pdf`;
-                    link.click();
-                });
-            })
-            .catch(error => console.error('Error generating resume:', error));
-        });
     </script>
-
+    
 </body>
 </html>
