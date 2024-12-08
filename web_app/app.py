@@ -1,7 +1,7 @@
 import base64
 import os
 import subprocess
-from flask import Flask, render_template, request, flash, redirect, send_file, url_for, session
+from flask import Flask, render_template, request, flash, redirect, send_file, url_for, session, jsonify
 from pymongo import MongoClient
 from resume import resume_bp
 
@@ -86,18 +86,46 @@ def create_app():
         if "email" not in session:
             flash("You must be logged in to save a resume.", "danger")
             return redirect(url_for("login"))
-        resume_data = request.json
+        
+        try:
+            resume_data = request.json
+            print("Received resume data:", resume_data)  # Debugging: print the received data
+        except Exception as e:
+            print(f"Error parsing JSON: {e}")
+            return jsonify({"error": "Invalid JSON in request"}), 400
+        
         email = session["email"]
-        resume_title = resume_data["name"]
-        pdf_base64 = resume_data["pdf"]
-        pdf_data = base64.b64decode(pdf_base64.split(",")[1])
+        resume_title = resume_data.get("name")
+        pdf_base64 = resume_data.get("pdf")
+
+        if not pdf_base64:
+            return jsonify({"error": "PDF data is missing"}), 400
+        
+        # Check if the base64 string includes the "data:" prefix and split it
+        if pdf_base64.startswith('data:application/pdf;base64,'):
+            pdf_base64 = pdf_base64.split(",")[1]
+        else:
+            print("PDF data format is incorrect")
+            return jsonify({"error": "Invalid PDF data format"}), 400
+
+        try:
+            # Decode the base64 PDF data
+            pdf_data = base64.b64decode(pdf_base64)
+        except Exception as e:
+            print(f"Error decoding PDF: {e}")
+            return jsonify({"error": "Error decoding PDF data"}), 500
+
+        # Save the resume to the database
         resume = {
             "email": email,
             "name": resume_title,
             "pdf": pdf_data
         }
-        
         resumes_collection.insert_one(resume)
+
+        # Return a success response
+        return jsonify({"message": "Resume saved successfully!"})
+
 
     @app.route("/logout")
     def logout():

@@ -6,16 +6,18 @@
     <title>Register</title>
     <link rel="stylesheet" href="styles.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dongle&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+        
         body {
-        font-family: 'Arial', sans-serif;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background: linear-gradient(to right, #6a11cb, #2575fc);
-        color: #fff;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: #fff;
         }
         .register-container {
             background: #fff;
@@ -110,7 +112,10 @@
     </style>
 </head>
 <body>
-    <div class="register-container">
+    <div>
+        <div style="font-family: Dongle; font-size: 3rem; border-right: 2px solid white; padding: 1rem;"><b>resume.ly</b></div>
+    </div>
+    <div class="register-container" style="margin-left: 1rem;">
         <h2>Register</h2>
         
         {% with messages = get_flashed_messages(with_categories=true) %}
