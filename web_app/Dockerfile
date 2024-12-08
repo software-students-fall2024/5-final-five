@@ -1,22 +1,26 @@
-# Use the official Python image
+# Use a lightweight Python image
 FROM python:3.9-slim
 
-# Set the working directory inside the container
+# Set working directory
 WORKDIR /app
 
-# Copy only the app files into the container
-COPY . /app
-
-# Install system dependencies and Python libraries
+# Install dependencies
 RUN apt-get update && apt-get install -y \
-    gcc \
-    libpq-dev \
+    texlive-latex-base \
+    texlive-latex-extra \
+    texlive-fonts-recommended \
+    texlive-xetex \
     && rm -rf /var/lib/apt/lists/*
 
+# Copy requirements and install Python dependencies
+COPY requirements.txt requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose the port used by the Flask app
+# Copy the rest of the app
+COPY . .
+
+# Expose the port
 EXPOSE 5002
 
-# Command to run the Flask app
+# Set the default command
 CMD ["python", "app.py"]
