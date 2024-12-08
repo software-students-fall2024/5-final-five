@@ -11,7 +11,10 @@ def create_app():
     app.secret_key = os.getenv("SECRET_KEY")
 
     # database initialization
-    client = MongoClient("mongodb://mongodb:27017/")
+    # link for dev purposes:
+    client = MongoClient("mongodb://localhost:27017/")
+    # use this once ready for docker(?):
+    # client = MongoClient("mongodb://mongodb:27017/")
     db = client["resume_db"]
     users_collection = db["users"] # STORES W/ EMAIL AND PASSWORD
     resumes_collection = db["resumes"] # STORES W/ USER IT WAS MADE BY, NAME OF RESUME, AND THE PDF ITSELF
@@ -69,22 +72,16 @@ def create_app():
             return redirect(url_for("login"))
 
     # get generate resume page, use commented out code instead once registration/login is working
-    @app.route("/generate_resume")
+    @app.route("/generate-resume")
     def generate_resume():
-        ''' 
-        !!!!
-        !!!! commented out for dev purposes but this is the actual code
-        !!!!
 
         if "email" in session:
             email = session["email"]
             resumes = resumes_collection.find({"email": email})
-            return render_template("generate_resume.html", email=email, resumes=resumes)
+            return render_template("generate-resume.html", email=email, resumes=resumes)
         else:
             flash("You must be logged in to access this.", "danger")
             return redirect(url_for("login"))
-        '''
-        return render_template("generate-resume.html")
 
     # saves resume to the database
     @app.route("/save_resume", methods=["POST"])
