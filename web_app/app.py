@@ -11,10 +11,7 @@ def create_app():
     app.secret_key = os.getenv("SECRET_KEY")
 
     # database initialization
-    # link for dev purposes:
-    client = MongoClient("mongodb://localhost:27017/")
-    # use this once ready for docker(?):
-    # client = MongoClient("mongodb://mongodb:27017/")
+    client = MongoClient("mongodb://mongodb:27017/")
     db = client["resume_db"]
     users_collection = db["users"] # STORES W/ EMAIL AND PASSWORD
     resumes_collection = db["resumes"] # STORES W/ USER IT WAS MADE BY, NAME OF RESUME, AND THE PDF ITSELF
