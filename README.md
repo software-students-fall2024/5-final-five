@@ -1,4 +1,5 @@
 ![CI/CD](https://github.com/software-students-fall2024/5-final-five/actions/workflows/web-app.yml/badge.svg)
+![CI/CD](https://github.com/software-students-fall2024/5-final-five/actions/workflows/deploy.yml/badge.svg)
 
 # **📄 resume.ly**
 
@@ -36,7 +37,6 @@ docker-compose up
 
 Once that is completed, you can access the site [HERE](http://0.0.0.0:8080)
 
-
 ## Team Members
 
 [Shray Awasti](https://github.com/shrayawasti)
@@ -46,7 +46,6 @@ Once that is completed, you can access the site [HERE](http://0.0.0.0:8080)
 [Fatima Villena](https://github.com/favils)
 
 [Melanie Zhang](https://github.com/melanie-y-zhang)
-
 
 ## Test Coverage
 
