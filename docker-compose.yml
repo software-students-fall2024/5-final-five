@@ -20,7 +20,7 @@ services:
       - "5002:5002"
     environment:
       - SECRET_KEY=your_secret_key
-      - MONGO_URI=mongodb://mongodb:27017/resume_db
+      - MONGO_URI=mongodb://mongodb:27017/
     depends_on:
       - mongodb
     networks:
@@ -31,4 +31,3 @@ volumes:
 
 networks:
   app-network:
-
