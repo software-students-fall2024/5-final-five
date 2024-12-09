@@ -1,8 +1,9 @@
 name: resume-builder-app
-region: nyc3 
+region: nyc3 # Replace with your desired region
 services:
   - name: flask-app
     image:
+      registry_type: DOCKER_HUB
       registry: docker.io
       repository: sra9483/flask-app
       tag: latest
@@ -13,6 +14,7 @@ services:
         value: Yjf8jfG3X9QsQ8M6ofXs0C0kBtHhgBgzO1mP3wY3UU4
   - name: mongodb
     image:
+      registry_type: DOCKER_HUB
       registry: docker.io
       repository: sra9483/mongodb
       tag: latest
