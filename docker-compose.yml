@@ -2,6 +2,7 @@ services:
   mongodb:
     build:
       context: ./web_app/mongodb
+    image: fav2019/mongodb:latest
     container_name: mongodb
     ports:
       - "27017:27017"
@@ -14,6 +15,7 @@ services:
   flask-app:
     build:
       context: ./web_app
+    image: fav2019/flask-app:latest
     container_name: flask-app
     ports:
       - "5002:5002"
@@ -31,3 +33,4 @@ volumes:
 
 networks:
   app-network:
+
