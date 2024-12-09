@@ -1,5 +1,16 @@
 name: Web App CI
 
+services:
+  mongodb:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    options: >-
+      --health-cmd="mongo --eval 'print(\"MongoDB is ready\")'"  # Health check
+      --health-interval=10s
+      --health-timeout=5s
+      --health-retries=5
+
 on:
   push:
     branches: ["main"]
@@ -26,6 +37,14 @@ jobs:
         run: |
           pipenv install
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-      - name: Test with pytest
+      - name: Wait for MongoDB to be ready
+        run: |
+          until mongo --host localhost --eval "print('MongoDB is ready')" &>/dev/null; do
+            echo "Waiting for MongoDB to be ready..."
+            sleep 2
+          done
+      - name: Run tests with pytest
         run: |
           pipenv run pytest
+        env:
+          MONGO_URI: mongodb://localhost:27017/test_db
