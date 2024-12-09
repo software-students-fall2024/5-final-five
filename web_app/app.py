@@ -9,8 +9,6 @@ def create_app():
     # app initialization
     app = Flask(__name__)
     app.secret_key = os.urandom(24)
-
-    # database initialization
     client = MongoClient(os.getenv("MONGO_URI"))
     db = client["resume_db"]
     users_collection = db["users"] # STORES W/ EMAIL AND PASSWORD
@@ -71,7 +69,6 @@ def create_app():
     # get generate resume page, use commented out code instead once registration/login is working
     @app.route("/generate-resume")
     def generate_resume():
-
         if "email" in session:
             email = session["email"]
             resumes = resumes_collection.find({"email": email})
