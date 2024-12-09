@@ -4,8 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Resumes</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dongle&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+        body {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+        }
+
+        button {
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            background: #6a11cb;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: background 0.3s ease;
+        }
+
         .resumes-container {
             background: #fff;
             color: #333;
@@ -60,17 +78,12 @@
     </style>
 </head>
 <body>
+    <div style="position:fixed; top:0; left:1rem">
+        <div style="font-family: Dongle; font-size: 3rem; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); color: #fff;"><b>resume.ly</b></div>
+    </div>
+    <a href="/dashboard"><center><button><b>Return</b></button></center></a>
     <div class="resumes-container">
         <h1>Your Resumes</h1>
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-        <div class="flash-messages">
-            {% for category, message in messages %}
-            <div class="flash-message {{ category }}">{{ message }}</div>
-            {% endfor %}
-        </div>
-        {% endif %}
-        {% endwith %}
 
         {% if resumes|length > 0 %}
         <ul class="resumes-list">
