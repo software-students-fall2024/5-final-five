@@ -10,39 +10,25 @@ jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: false
       matrix:
         python-version: ["3.12"]
 
-    services:
-      mongodb:
-        image: mongo:latest
-        ports:
-          - 27017:27017
-        options: >-
-          --health-cmd="mongo --host localhost --eval 'db.runCommand({ ping: 1 })'"
-          --health-interval=10s 
-          --health-timeout=10s
-          --health-retries=5
-
     steps:
       - uses: actions/checkout@v4
+      
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v3
         with:
+
           python-version: ${{ matrix.python-version }}
       - name: Install Pipenv
         run: pip install pipenv
+
       - name: Install dependencies
         run: |
           pipenv install
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-      - name: Wait for MongoDB to be ready
-        run: |
-          until mongo --host mongodb --eval "db.runCommand({ ping: 1 })" &>/dev/null; do
-            echo "Waiting for MongoDB to be ready..."
-            sleep 2
-          done
+  
       - name: Run tests with pytest
         run: |
           pipenv run pytest
