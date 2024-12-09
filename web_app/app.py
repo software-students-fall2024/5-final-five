@@ -77,13 +77,26 @@ def create_app():
             flash("You must be logged in to access this.", "danger")
             return redirect(url_for("login"))
 
+    @app.route("/generated-resumes")
+    def generated_resumes():
+        if "email" not in session:
+            flash("You must be logged in to view resumes.", "danger")
+            return redirect(url_for("login"))
+
+        email = session["email"]
+
+        resumes_cursor = resumes_collection.find({"email": email})
+        resumes = list(resumes_cursor)
+
+        return render_template("view-resumes.html", email=email, resumes=resumes)
+
+        
     # saves resume to the database
     @app.route("/save_resume", methods=["POST"])
     def save_resume():
         if "email" not in session:
             flash("You must be logged in to save a resume.", "danger")
             return redirect(url_for("login"))
-        
         try:
             resume_data = request.json
             print("Received resume data:", resume_data)  # Debugging: print the received data
@@ -97,22 +110,17 @@ def create_app():
 
         if not pdf_base64:
             return jsonify({"error": "PDF data is missing"}), 400
-        
-        # Check if the base64 string includes the "data:" prefix and split it
         if pdf_base64.startswith('data:application/pdf;base64,'):
             pdf_base64 = pdf_base64.split(",")[1]
         else:
             print("PDF data format is incorrect")
             return jsonify({"error": "Invalid PDF data format"}), 400
-
         try:
-            # Decode the base64 PDF data
             pdf_data = base64.b64decode(pdf_base64)
         except Exception as e:
             print(f"Error decoding PDF: {e}")
             return jsonify({"error": "Error decoding PDF data"}), 500
 
-        # Save the resume to the database
         resume = {
             "email": email,
             "name": resume_title,
@@ -120,7 +128,6 @@ def create_app():
         }
         resumes_collection.insert_one(resume)
 
-        # Return a success response
         return jsonify({"message": "Resume saved successfully!"})
 
 

@@ -1,16 +1,22 @@
-![Web App CI/CD](https://github.com/software-students-fall2024/5-final-five/actions/workflows/web-app.yml/badge.svg)
+![CI/CD](https://github.com/software-students-fall2024/5-final-five/actions/workflows/web-app.yml/badge.svg)
 
-# Final Project
-
-An exercise to put to practice software development teamwork, subsystem communication, containers, deployment, and CI/CD pipelines. See [instructions](./instructions.md) for details.
+# **📄 resume.ly**
 
 ## Description
 
 Our Resume Builder is a streamlined webapp that allows users to easily build a formatted resume. It also stores users' generated resumes to be accessed at will.
 
-## Run the app
+## Docker Image
 
-Your .env file in the web_app directory:
+You can access the Docker image for **resume.ly** on Docker Hub:
+
+[**resume.ly Docker Image**](https://hub.docker.com/r/fav2019/flask-app)
+
+## Run the App
+
+### Environment Setup
+
+Before running the app, ensure your `.env` file in the `web_app` directory contains the following MongoDB URI configuration:
 
 ```
 MONGO_URI=mongodb://mongodb:27017/
@@ -30,6 +36,7 @@ docker-compose up
 
 Once that is completed, you can access the site [HERE](http://0.0.0.0:8080)
 
+
 ## Team Members
 
 [Shray Awasti](https://github.com/shrayawasti)
@@ -40,5 +47,7 @@ Once that is completed, you can access the site [HERE](http://0.0.0.0:8080)
 
 [Melanie Zhang](https://github.com/melanie-y-zhang)
 
-## Docker Image
-[Link](https://hub.docker.com/r/fav2019/web-app)
+
+## Test Coverage
+
+<img src="coverage.png" alt="coverage" width="300"/>
