@@ -10,7 +10,6 @@ services:
       - mongodb_data:/data/db
     networks:
       - app-network
-    image: fav2019/mongodb:latest
 
   flask-app:
     build:
@@ -26,7 +25,6 @@ services:
       - mongodb
     networks:
       - app-network
-    image: fav2019/flask-app:latest
 
 volumes:
   mongodb_data:
