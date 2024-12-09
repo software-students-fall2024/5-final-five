@@ -1,16 +1,5 @@
 name: Web App CI
 
-services:
-  mongodb:
-    image: mongo:latest
-    ports:
-      - 27017:27017
-    options: >-
-      --health-cmd="mongo --eval 'print(\"MongoDB is ready\")'"  # Health check
-      --health-interval=10s
-      --health-timeout=5s
-      --health-retries=5
-
 on:
   push:
     branches: ["main"]
@@ -24,6 +13,17 @@ jobs:
       fail-fast: false
       matrix:
         python-version: ["3.12"]
+
+    services:
+      mongodb:
+        image: mongo:latest
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd="mongo --eval 'print(\"MongoDB is ready\")'" 
+          --health-interval=10s 
+          --health-timeout=5s 
+          --health-retries=5
 
     steps:
       - uses: actions/checkout@v4
@@ -48,3 +48,4 @@ jobs:
           pipenv run pytest
         env:
           MONGO_URI: mongodb://localhost:27017/test_db
+
