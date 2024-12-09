@@ -1,4 +1,4 @@
-name: ResumeBuilderApp
+name: resume-builder-app
 region: nyc3 
 services:
   - name: flask-app
