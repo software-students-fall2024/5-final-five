@@ -13,6 +13,9 @@ You can access the Docker image for **resume.ly** on Docker Hub:
 
 [**resume.ly Docker Image**](https://hub.docker.com/r/fav2019/flask-app)
 
+## Try it out yourself
+[Live Link](https://resume-builder-wwcqm.ondigitalocean.app/) 
+
 ## Run the App
 
 ### Environment Setup
@@ -35,10 +38,8 @@ If you've already built previously, you may compose the containers like so:
 docker-compose up
 ```
 
-Once that is completed, you can access the site [HERE](http://0.0.0.0:8080)
+Once that is completed, you can access the site [HERE](http://localhost:5002/)
 
-
-The live link to the site is [HERE](https://resume-builder-wwcqm.ondigitalocean.app/)
 
 
 ## Team Members
