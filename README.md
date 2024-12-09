@@ -8,7 +8,7 @@ An exercise to put to practice software development teamwork, subsystem communic
 
 Our Resume Builder is a streamlined webapp that allows users to easily build a formatted resume. It also stores users' generated resumes to be accessed at will.
 
-## [Docker Image](https://hub.docker.com/r/fav2019/web-app)](https://hub.docker.com/r/fav2019/flask-app)
+## [Docker Image](https://hub.docker.com/r/fav2019/flask-app)
 
 ## Run the app
 
