@@ -10,6 +10,12 @@ Our Resume Builder is a streamlined webapp that allows users to easily build a f
 
 ## Run the app
 
+Your .env file in the web_app directory:
+
+```
+MONGO_URI=mongodb://mongodb:27017/
+```
+
 Start by building:
 
 ```
