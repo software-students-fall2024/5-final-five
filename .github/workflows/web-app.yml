@@ -20,9 +20,9 @@ jobs:
         ports:
           - 27017:27017
         options: >-
-          --health-cmd="mongo --host localhost --eval 'print(\"MongoDB is ready\")'"
+          --health-cmd="mongo --host localhost --eval 'db.runCommand({ ping: 1 })'"
           --health-interval=10s 
-          --health-timeout=5s 
+          --health-timeout=10s
           --health-retries=5
 
     steps:
@@ -39,7 +39,7 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Wait for MongoDB to be ready
         run: |
-          until mongo --host mongodb --eval "print('MongoDB is ready')" &>/dev/null; do
+          until mongo --host mongodb --eval "db.runCommand({ ping: 1 })" &>/dev/null; do
             echo "Waiting for MongoDB to be ready..."
             sleep 2
           done
