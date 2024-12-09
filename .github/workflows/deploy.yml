@@ -34,8 +34,9 @@ jobs:
 
     - name: Install doctl
       run: |
-        curl -sL https://github.com/digitalocean/doctl/releases/latest/download/doctl-linux-amd64.tar.gz | tar -xzv
+        curl -sL https://github.com/digitalocean/doctl/releases/latest/download/doctl-$(uname -s)-$(uname -m).tar.gz | tar -xzv
         sudo mv doctl /usr/local/bin
+        doctl version
 
     - name: Deploy to DigitalOcean
       run: |
