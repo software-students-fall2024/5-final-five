@@ -32,8 +32,12 @@ jobs:
         docker build -t sra9483/mongodb:latest -f ./web_app/mongodb/Dockerfile ./web_app/mongodb
         docker push sra9483/mongodb:latest
 
+    - name: Install doctl
+      run: |
+        curl -sL https://github.com/digitalocean/doctl/releases/latest/download/doctl-linux-amd64.tar.gz | tar -xzv
+        sudo mv doctl /usr/local/bin
+
     - name: Deploy to DigitalOcean
       run: |
         doctl auth init --access-token ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-        doctl apps update ${{ secrets.DIGITALOCEAN_APP_ID }} \
-          --spec ./web_app/digitalocean-app-spec.yaml
+        doctl apps create --spec ./web_app/digitalocean-app-spec.yaml
