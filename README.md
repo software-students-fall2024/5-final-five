@@ -42,3 +42,6 @@ Once that is completed, you can access the site [HERE](http://127.0.0.1:5002)
 
 ## Docker Image
 [Link](https://hub.docker.com/r/fav2019/web-app)
+
+# Tests Coverage
+![coverage](coverage.png)
