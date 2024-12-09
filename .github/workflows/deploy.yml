@@ -1,0 +1,39 @@
+name: Deploy Project to DigitalOcean
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build Flask App Docker Image
+      run: |
+        docker build -t sra9483/flask-app:latest ./web_app
+        docker push sra9483/flask-app:latest
+
+    - name: Build MongoDB Docker Image
+      run: |
+        docker build -t sra9483/mongodb:latest -f ./web_app/mongodb/Dockerfile ./web_app/mongodb
+        docker push sra9483/mongodb:latest
+
+    - name: Deploy to DigitalOcean
+      run: |
+        doctl auth init --access-token ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+        doctl apps update ${{ secrets.DIGITALOCEAN_APP_ID }} \
+          --spec ./web_app/digitalocean-app-spec.yaml

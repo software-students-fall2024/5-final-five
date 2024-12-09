@@ -34,9 +34,8 @@ If you've already built previously, you may compose the containers like so:
 docker-compose up
 ```
 
-Once the setup is complete, access the app by visiting the following URL in your browser:
+Once that is completed, you can access the site [HERE](http://0.0.0.0:8080)
 
-[**Visit the App**](http://127.0.0.1:5002)
 
 ## Team Members
 

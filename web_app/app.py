@@ -8,8 +8,8 @@ from resume import resume_bp
 def create_app():
     # app initialization
     app = Flask(__name__)
-    app.secret_key = os.urandom(24)
-    client = MongoClient("mongodb://localhost:27017/")
+    app.secret_key = os.getenv("SECRET_KEY")
+    client = MongoClient(os.getenv("MONGO_URI"))
     db = client["resume_db"]
     users_collection = db["users"] # STORES W/ EMAIL AND PASSWORD
     resumes_collection = db["resumes"] # STORES W/ USER IT WAS MADE BY, NAME OF RESUME, AND THE PDF ITSELF
@@ -142,4 +142,4 @@ def create_app():
     return app
 
 if __name__ == "__main__":
-    create_app().run(host="0.0.0.0", port=5002, debug=True)
+    create_app().run(host="0.0.0.0", port=8080, debug=True)
