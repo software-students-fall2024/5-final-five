@@ -1,0 +1,12 @@
+name: MyApp
+region: nyc3 
+services:
+  - name: flask-app
+    image: sra9483/flask-app:latest
+    envs:
+      - key: MONGO_URI
+        value: mongodb://mongodb:27017/
+      - key: SECRET_KEY
+        value: Yjf8jfG3X9QsQ8M6ofXs0C0kBtHhgBgzO1mP3wY3UU4
+  - name: mongodb
+    image: sra9483/mongodb:latest
