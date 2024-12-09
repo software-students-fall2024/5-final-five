@@ -36,6 +36,7 @@ docker-compose up
 
 Once that is completed, you can access the site [HERE](http://0.0.0.0:8080)
 
+The live link to the site is [HERE](https://resume-builder-wwcqm.ondigitalocean.app/)
 
 ## Team Members
 
