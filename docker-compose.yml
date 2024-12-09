@@ -2,7 +2,7 @@ services:
   mongodb:
     build:
       context: ./web_app/mongodb
-    image: fav2019/mongodb:latest
+    image: sra9483/mongodb:latest
     container_name: mongodb
     ports:
       - "27017:27017"
@@ -14,10 +14,10 @@ services:
   flask-app:
     build:
       context: ./web_app
-    image: fav2019/flask-app:latest
+    image: sra9483/flask-app:latest
     container_name: flask-app
     ports:
-      - "8080:8080"  # Match Gunicorn's port
+      - "8080:8080"  
     environment:
       - SECRET_KEY=${SECRET_KEY:-Yjf8jfG3X9QsQ8M6ofXs0C0kBtHhgBgzO1mP3wY3UU4}
       - MONGO_URI=${MONGO_URI:-mongodb://mongodb:27017/resume_db}
