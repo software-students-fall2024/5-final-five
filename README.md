@@ -28,7 +28,7 @@ If you've already built previously, you may compose the containers like so:
 docker-compose up
 ```
 
-Once that is completed, you can access the site [HERE](http://127.0.0.1:5002)
+Once that is completed, you can access the site [HERE](http://0.0.0.0:8080)
 
 ## Team Members
 

@@ -16,14 +16,16 @@ services:
       context: ./web_app
     container_name: flask-app
     ports:
-      - "5002:5002"
+      - "8080:8080"  # Match Gunicorn's port
     environment:
-      - SECRET_KEY=your_secret_key
-      - MONGO_URI=mongodb://mongodb:27017/resume_db
+      - SECRET_KEY=${SECRET_KEY:-Yjf8jfG3X9QsQ8M6ofXs0C0kBtHhgBgzO1mP3wY3UU4}
+      - MONGO_URI=${MONGO_URI:-mongodb://mongodb:27017/resume_db}
     depends_on:
       - mongodb
     networks:
       - app-network
+    command: ["gunicorn", "-w", "2", "-b", "0.0.0.0:8080", "app:create_app()"]
+
 
 volumes:
   mongodb_data:
