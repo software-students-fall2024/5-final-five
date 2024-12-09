@@ -1,5 +1,5 @@
 name: resume-builder-app
-region: nyc3 # Replace with your desired region
+region: nyc3
 services:
   - name: flask-app
     image:
@@ -12,6 +12,9 @@ services:
         value: mongodb://mongodb:27017/
       - key: SECRET_KEY
         value: Yjf8jfG3X9QsQ8M6ofXs0C0kBtHhgBgzO1mP3wY3UU4
+    http_port: 8080
+    routes:
+      - path: /
   - name: mongodb
     image:
       registry_type: DOCKER_HUB
