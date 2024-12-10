@@ -62,6 +62,7 @@ jobs:
           docker-compose -f docker-compose.yml push
       
   deploy:
+    needs: docker
     steps:
       - name: Install doctl
         run: |
@@ -70,9 +71,9 @@ jobs:
           sudo mv doctl /usr/local/bin
           doctl version
 
-    - name: Deploy to DigitalOcean
-        env:
-          DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITAL_OCEAN }}
-        run: |
-          doctl auth init -t $DIGITALOCEAN_ACCESS_TOKEN
-          doctl apps create --spec ./web_app/digitalocean-app-spec.yaml
+      - name: Deploy to DigitalOcean
+          env:
+            DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITAL_OCEAN }}
+          run: |
+            doctl auth init -t $DIGITALOCEAN_ACCESS_TOKEN
+            doctl apps create --spec ./web_app/digitalocean-app-spec.yaml
