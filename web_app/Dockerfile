@@ -19,8 +19,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the app
 COPY . .
 
-# Expose the port used by Gunicorn
-EXPOSE 8080
+EXPOSE 5000
 
-# Set the default command to run Gunicorn
-CMD ["gunicorn", "-c", "gunicorn_config.py", "app:create_app()"]
+CMD ["flask", "run", "--host=0.0.0.0", "--port=5002"]
