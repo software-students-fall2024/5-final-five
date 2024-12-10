@@ -22,16 +22,6 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Build Flask App Docker Image
-      run: |
-        docker build -t sra9483/flask-app:latest ./web_app
-        docker push sra9483/flask-app:latest
-
-    - name: Build MongoDB Docker Image
-      run: |
-        docker build -t sra9483/mongodb:latest -f ./web_app/mongodb/Dockerfile ./web_app/mongodb
-        docker push sra9483/mongodb:latest
-
     - name: Install doctl
       run: |
         curl -sL https://github.com/digitalocean/doctl/releases/download/v1.94.0/doctl-1.94.0-linux-amd64.tar.gz -o doctl.tar.gz
