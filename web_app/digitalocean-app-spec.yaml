@@ -15,9 +15,12 @@ services:
     http_port: 8080
     routes:
       - path: /
+
   - name: mongodb
     image:
       registry_type: DOCKER_HUB
       registry: docker.io
       repository: sra9483/mongodb
       tag: latest
+    routes:
+      - path: /mongodb
