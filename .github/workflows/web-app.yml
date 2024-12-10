@@ -60,10 +60,3 @@ jobs:
       - name: Push Docker Images
         run: |
           docker-compose -f docker-compose.yml push
-  
-      - name: Deploy the app
-        uses: digitalocean/app_action/deploy@v2
-        env:
-          SAMPLE_DIGEST: ${{ steps.push.outputs.digest }}
-        with:
-          token: ${{ secrets.DIGITAL_OCEAN }}
