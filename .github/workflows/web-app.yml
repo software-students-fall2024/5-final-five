@@ -72,8 +72,8 @@ jobs:
           doctl version
 
       - name: Deploy to DigitalOcean
-          env:
-            DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITAL_OCEAN }}
-          run: |
-            doctl auth init -t $DIGITALOCEAN_ACCESS_TOKEN
-            doctl apps create --spec ./web_app/digitalocean-app-spec.yaml
+        env:
+          DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITAL_OCEAN }}
+        run: |
+          doctl auth init -t $DIGITALOCEAN_ACCESS_TOKEN
+          doctl apps create --spec ./web_app/digitalocean-app-spec.yaml
