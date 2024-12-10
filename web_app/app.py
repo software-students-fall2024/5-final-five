@@ -8,7 +8,7 @@ from resume import resume_bp
 def create_app():
     # app initialization
     app = Flask(__name__)
-    app.secret_key = os.getenv("SECRET_KEY")
+    app.secret_key = os.urandom(24)
     client = MongoClient(os.getenv("MONGO_URI"))
     db = client["resume_db"]
     users_collection = db["users"] # STORES W/ EMAIL AND PASSWORD
