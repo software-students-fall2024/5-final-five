@@ -9,7 +9,7 @@ def create_app():
     # app initialization
     app = Flask(__name__)
     app.secret_key = os.urandom(24)
-    client = MongoClient("mongodb://localhost:27017/")
+    client = MongoClient(os.getenv("MONGO_URI"))
     db = client["resume_db"]
     users_collection = db["users"] # STORES W/ EMAIL AND PASSWORD
     resumes_collection = db["resumes"] # STORES W/ USER IT WAS MADE BY, NAME OF RESUME, AND THE PDF ITSELF
