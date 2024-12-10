@@ -15,13 +15,15 @@ services:
       context: ./web_app
     container_name: flask-app
     ports:
-      - "5002:5002"
+      - "8080:8080"  
     environment:
       - MONGO_URI=mongodb://mongodb:27017/
     depends_on:
       - mongodb
     networks:
       - app-network
+    command: ["gunicorn", "-w", "2", "-b", "0.0.0.0:8080", "app:create_app()"]
+
 
 volumes:
   mongodb_data:
