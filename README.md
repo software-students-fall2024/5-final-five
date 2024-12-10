@@ -1,4 +1,5 @@
 ![CI/CD](https://github.com/software-students-fall2024/5-final-five/actions/workflows/web-app.yml/badge.svg)
+![CI/CD](https://github.com/software-students-fall2024/5-final-five/actions/workflows/deploy.yml/badge.svg)
 
 # **📄 resume.ly**
 
@@ -11,6 +12,9 @@ Our Resume Builder is a streamlined webapp that allows users to easily build a f
 You can access the Docker image for **resume.ly** on Docker Hub:
 
 [**resume.ly Docker Image**](https://hub.docker.com/r/fav2019/flask-app)
+
+## Try it out yourself
+[Live Link](https://resume-builder-wwcqm.ondigitalocean.app/) 
 
 ## Run the App
 
@@ -34,9 +38,9 @@ If you've already built previously, you may compose the containers like so:
 docker-compose up
 ```
 
-Once the setup is complete, access the app by visiting the following URL in your browser:
+Once that is completed, you can access the site [HERE](http://localhost:5002/)
 
-[**Visit the App**](http://127.0.0.1:5002)
+
 
 ## Team Members
 
@@ -47,7 +51,6 @@ Once the setup is complete, access the app by visiting the following URL in your
 [Fatima Villena](https://github.com/favils)
 
 [Melanie Zhang](https://github.com/melanie-y-zhang)
-
 
 ## Test Coverage
 

@@ -2,7 +2,7 @@ services:
   mongodb:
     build:
       context: ./web_app/mongodb
-    image: fav2019/mongodb:latest
+    image: sra9483/mongodb:latest
     container_name: mongodb
     ports:
       - "27017:27017"
@@ -14,10 +14,10 @@ services:
   flask-app:
     build:
       context: ./web_app
-    image: fav2019/flask-app:latest
+    image: sra9483/flask-app:latest
     container_name: flask-app
     ports:
-      - "5002:5002"
+      - "8080:8080"  
     environment:
       - SECRET_KEY=your_secret_key
       - MONGO_URI=mongodb://mongodb:27017/
@@ -25,6 +25,8 @@ services:
       - mongodb
     networks:
       - app-network
+    command: ["gunicorn", "-w", "2", "-b", "0.0.0.0:8080", "app:create_app()"]
+
 
 volumes:
   mongodb_data:
