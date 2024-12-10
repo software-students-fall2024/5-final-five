@@ -32,7 +32,7 @@ jobs:
         run: |
           pipenv run pytest
   
-  push-deploy:
+  docker:
     runs-on: ubuntu-latest
     needs: build
     steps:
