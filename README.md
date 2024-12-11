@@ -1,5 +1,4 @@
 ![CI/CD](https://github.com/software-students-fall2024/5-final-five/actions/workflows/web-app.yml/badge.svg)
-![CI/CD](https://github.com/software-students-fall2024/5-final-five/actions/workflows/deploy.yml/badge.svg)
 
 # **📄 resume.ly**
 
@@ -38,7 +37,7 @@ If you've already built previously, you may compose the containers like so:
 docker-compose up
 ```
 
-Once that is completed, you can access the site [HERE](http://localhost:5002/)
+Once that is completed, you can access the site [HERE](http://localhost:8080/)
 
 
 
