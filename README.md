@@ -14,7 +14,7 @@ You can access the Docker image for **resume.ly** on Docker Hub:
 [**resume.ly Docker Image**](https://hub.docker.com/r/fav2019/flask-app)
 
 ## Try it out yourself
-[Live Link](https://resume-builder-wwcqm.ondigitalocean.app/) 
+[Live Link](https://hammerhead-app-jz7oy.ondigitalocean.app/) 
 
 ## Run the App
 
