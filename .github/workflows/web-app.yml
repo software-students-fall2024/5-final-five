@@ -1,4 +1,4 @@
-name: Web App CI
+name: Build and Deploy
 
 on:
   push:
@@ -53,13 +53,10 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build Docker Images with Docker Compose
+      - name: Build Flask App Docker Image
         run: |
-          docker-compose -f docker-compose.yml build
-
-      - name: Push Docker Images
-        run: |
-          docker-compose -f docker-compose.yml push
+          docker build -t sra9483/flask-app:latest ./web_app
+          docker push sra9483/flask-app:latest
 
       - name: Install doctl
         run: |
