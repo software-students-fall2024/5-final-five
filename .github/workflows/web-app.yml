@@ -57,17 +57,3 @@ jobs:
         run: |
           docker build -t sra9483/flask-app:latest ./web_app
           docker push sra9483/flask-app:latest
-
-      - name: Install doctl
-        run: |
-          curl -sL https://github.com/digitalocean/doctl/releases/download/v1.94.0/doctl-1.94.0-linux-amd64.tar.gz -o doctl.tar.gz
-          tar -xzf doctl.tar.gz
-          sudo mv doctl /usr/local/bin
-          doctl version
-
-      - name: Deploy to DigitalOcean
-        env:
-          DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITAL_OCEAN }}
-        run: |
-          doctl auth init -t $DIGITALOCEAN_ACCESS_TOKEN
-          doctl apps create --spec ./web_app/digitalocean-app-spec.yaml
